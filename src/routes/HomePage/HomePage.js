@@ -1,0 +1,51 @@
+import React, { Component } from 'react'
+import { Layout, Menu } from 'antd';
+
+import MainPage from './MainPage/MainPage'
+import MinePage from './MinePage/MinePage'
+import SettingPage from './SettingPage/SettingPage'
+
+import {Route, Switch, Link } from 'dva/router';
+
+const { Header } = Layout;
+export default class HomePage extends Component {
+   state={
+        menus:[{
+            title: '首页',
+            url: '/'
+        }, {
+            title: '我的',
+            url: '/mine'
+        }, {
+            title: '设置',
+            url: '/setting'
+        }]
+    }
+    render() {
+        return (
+            <Layout>
+                <Header className="header">
+                    <div className="logo" />
+                    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']} style={{ lineHeight: '64px' }}>
+                        {this.state.menus.map((item,index)=>{
+                            return(
+                                <Menu.Item key={index}>
+                                    <Link to={item.url}>
+                                    {item.title}
+                                    </Link>
+                                </Menu.Item>
+                            )
+                        })}
+                    </Menu>
+                </Header>
+              
+                <Switch>
+                    <Route path="/" exact component={MainPage}></Route>
+                    <Route path="/mine" component={MinePage}></Route>
+                    <Route path="/setting" component={SettingPage}></Route>
+                </Switch>
+         
+            </Layout>
+        )
+    }
+}
